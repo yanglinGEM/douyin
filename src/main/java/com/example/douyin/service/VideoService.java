@@ -39,8 +39,8 @@ public class VideoService {
     public Map<String, String> publishVideo(int author_id, MultipartFile data, String title) throws IOException {
         String play_url = "http://192.168.1.3:8080/static/" + author_id + title + ".mp4";
         data.transferTo(Path.of("D:\\BackProject\\douyin\\src\\main\\resources\\static\\", author_id + title + ".mp4"));
-        String conver_url = "https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg";
-        Video video = new Video(author_id, play_url, conver_url, LocalDateTime.now(), title);
+        String cover_url = "https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg";
+        Video video = new Video(author_id, play_url, cover_url, LocalDateTime.now(), title);
         if (author_id == -1 || !videoMapper.insertVideo(video) ) return Map.of("status_code", "1", "status_msg","视频上传失败，请重新登录");
         System.out.println("上传视频");
         return Map.of("status_code", "0", "status_msg","视频上传成功");
