@@ -59,9 +59,8 @@ public class UserController {
     @ResponseBody
     public UserResponse loginSuccess(int user_id, String token) {
         System.out.println("用户信息");
-        Object id = 0;
-        if (token != null && !token.equals("") && redisTemplate.opsForValue().get(token) != null) id = redisTemplate.opsForValue().get(token);
-        User userInfo = userService.getUserInfoByUserId(user_id,(int)id);
-        return new UserResponse(0,"获取用户信息成功",userInfo);
+        int self_user_id = 0;
+        if (token != null && !token.equals("") && redisTemplate.opsForValue().get(token) != null) self_user_id = (int) redisTemplate.opsForValue().get(token);
+        return new UserResponse(0,"获取用户信息成功",userService.getUserInfoByUserId(user_id,self_user_id));
     }
 }

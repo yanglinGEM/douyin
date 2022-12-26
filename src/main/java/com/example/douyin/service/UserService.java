@@ -17,12 +17,15 @@ public class UserService {
     FollowMapper followMapper;
     @Autowired
     UserMapper userMapper;
-    public User getUserInfoByUserId(int author_id, int user_id) {
+    public User getUserInfoByUserId(int author_id, int self_user_id) {
         User user = userMapper.selectById(author_id);
         if (user == null) return user;
         user.setFollow_count(followMapper.getFollowCountByUserId(author_id));
         user.setFollower_count(followMapper.getFollowerCountByUserId(author_id));
-        user.setIs_follow(followMapper.ifFollowByUserIdAndAuthorId(user_id, author_id));
+        boolean ifFollow = followMapper.ifFollowByUserIdAndAuthorId(self_user_id, author_id);
+        if (ifFollow) {
+            user.setIs_follow(followMapper.getCancelByUserIdAndAuthorId(self_user_id,author_id) == 1 ? true : false);
+        } else user.setIs_follow(ifFollow);
         return user;
     }
 

@@ -27,11 +27,16 @@ public class VideoService {
     public List<Video> getVideoList(int selfUserId, int authorId) {
         List<Video> videoList;
         if (authorId == -1) videoList = videoMapper.getVideoList();
+        else if (authorId == 0) videoList = likeMapper.getLikeVideoList(selfUserId);
         else videoList = videoMapper.getVideoListByUserId(authorId);
         for (Video v : videoList) {
             v.setFavorite_count(likeMapper.getLikeCountByVideoId(v.getId()));
             v.setComment_count(commentMapper.getCommentCountByVideoId(v.getId()));
-            v.setIs_favorite(likeMapper.ifLikeByUserIdAndVideoId(selfUserId,v.getId()));
+            boolean ifLike = likeMapper.ifLikeByUserIdAndVideoId(selfUserId, v.getId());
+            if (ifLike) {
+                boolean isFavorite = likeMapper.getCancelByUserIdAndVideoId(selfUserId,v.getId()) == 1 ? true: false;
+                v.setIs_favorite(isFavorite);
+            } else v.setIs_favorite(ifLike);
             v.setAuthor(userService.getUserInfoByUserId(v.getAuthor_id(), selfUserId));
         }
         return videoList;

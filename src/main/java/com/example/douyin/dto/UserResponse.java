@@ -6,11 +6,25 @@ public class UserResponse {
     private int status_code;
     private String status_msg;
     private User user;
-
+    private List<User> user_list;
     public UserResponse(int status_code, String status_msg, User user) {
         this.status_code = status_code;
         this.status_msg = status_msg;
         this.user = user;
+    }
+
+    public UserResponse(int status_code, String status_msg, List<User> user_list) {
+        this.status_code = status_code;
+        this.status_msg = status_msg;
+        this.user_list = user_list;
+    }
+
+    public List<User> getUser_list() {
+        return user_list;
+    }
+
+    public void setUser_list(List<User> user_list) {
+        this.user_list = user_list;
     }
 
     public UserResponse() {
