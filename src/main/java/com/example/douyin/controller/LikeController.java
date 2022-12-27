@@ -1,7 +1,6 @@
 package com.example.douyin.controller;
 
-import com.example.douyin.dao.LikeMapper;
-import com.example.douyin.dao.VideoMapper;
+
 import com.example.douyin.dto.FeedResponse;
 import com.example.douyin.service.LikeService;
 import com.example.douyin.service.VideoService;
